@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Castle Score</title>
+	<h:outputStylesheet name="style.css" library="styles"/>
+</h:head>
+
+
+<h:body>
+	<div class="bg-image"></div>
+
+	<h:form id="menu">
+		<p:menubar>
+			<p:menuitem value="Main Page"/>
+			<p:menuitem value="Calculator"/>
+			<p:submenu label="Options" style="margin-left: 85.7%" position="fixed"/>
+		</p:menubar>
+	</h:form>
+	
+	<ui:insert name="pageContent"></ui:insert>
+	
+	<div class="footer">
+		<h4 style="color:LightGray">© Bartosz Zysk</h4>
+	</div>
+
+</h:body>
+
+</html>
