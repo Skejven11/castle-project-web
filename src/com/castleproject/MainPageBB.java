@@ -63,10 +63,6 @@ public class MainPageBB {
 	public String newCastle(){
 		Castle castle = new Castle();
 		
-		//1. Pass object through session
-		//HttpSession session = (HttpSession) extcontext.getSession(true);
-		//session.setAttribute("person", person);
-		
 		//2. Pass object through flash	
 		flash.put("castle", castle);
 		
@@ -74,9 +70,6 @@ public class MainPageBB {
 	}
 
 	public String editCastle(Castle castle){
-		//1. Pass object through session
-		//HttpSession session = (HttpSession) extcontext.getSession(true);
-		//session.setAttribute("person", person);
 		
 		//2. Pass object through flash 
 		flash.put("castle", castle);
