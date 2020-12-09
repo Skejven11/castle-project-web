@@ -8,58 +8,66 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 	
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Castle List</title>
+<h:outputStylesheet name="css/style.css" library="template"/>
+</h:head>
+	
 <ui:composition template="/templates/main-template.xhtml">
 
 	<ui:define name="pageContent">
-	
-		<h:form id="form-table" style="margin-bottom:1em;">
-		<p:dataTable value="#{mainPageBB.list}" var="c">
-			
-			<p:column priority="5">
-				<f:facet name="header">
-					<h:outputText value="Name" />
-				</f:facet>
-				<h:outputText value="#{c.name}" />
-			</p:column>
-			
-			<p:column priority="5">
-				<f:facet name="header">
-					<h:outputText value="Country" />
-				</f:facet>
-				<h:outputText value="#{c.country}" />
-			</p:column>
-			
-			<p:column priority="5">
-				<f:facet name="header">
-					<h:outputText value="Current Owner" />
-				</f:facet>
-				<h:outputText value="#{c.currentOwner}" />
-			</p:column>
-			
-			<p:column priority="5">
-				<f:facet name="header">
-					<h:outputText value="Original Owner" />
-				</f:facet>
-				<h:outputText value="#{c.originalOwner}" />
-			</p:column>
-			
-			<p:column priority="5">
-				<f:facet name="header">
-					<h:outputText value="Construction Century" />
-				</f:facet>
-				<h:outputText value="#{c.constructionCentury}th" />
-			</p:column>
-			
-			<p:column priority="5">
-				<f:facet name="header">
-					<h:outputText value="State of the castle" />
-				</f:facet>
-				<h:outputText value="#{c.constructionCentury}th" />
-			</p:column>
-			
-		</p:dataTable>
-		</h:form>
-		
+	<div class="mainPanel">
+		<p:panel id="basic" class="table">
+				<h:form id="form-table" style="margin-bottom:1em;">
+				<p:dataTable value="#{mainPageBB.list}" var="c">
+					
+					<p:column priority="5">
+						<f:facet name="header">
+							<h:outputText value="Name" />
+						</f:facet>
+						<h:outputText value="#{c.name}" />
+					</p:column>
+					
+					<p:column priority="5">
+						<f:facet name="header">
+							<h:outputText value="Country" />
+						</f:facet>
+						<h:outputText value="#{c.country}" />
+					</p:column>
+					
+					<p:column priority="5">
+						<f:facet name="header">
+							<h:outputText value="Current Owner" />
+						</f:facet>
+						<h:outputText value="#{c.currentOwner}" />
+					</p:column>
+					
+					<p:column priority="5">
+						<f:facet name="header">
+							<h:outputText value="Original Owner" />
+						</f:facet>
+						<h:outputText value="#{c.originalOwner}" />
+					</p:column>
+					
+					<p:column priority="5">
+						<f:facet name="header">
+							<h:outputText value="Construction Century" />
+						</f:facet>
+						<h:outputText value="#{c.constructionCentury}th" />
+					</p:column>
+					
+					<p:column priority="5">
+						<f:facet name="header">
+							<h:outputText value="State of the castle" />
+						</f:facet>
+						<h:outputText value="#{c.constructionCentury}th" />
+					</p:column>
+					
+				</p:dataTable>
+				</h:form>
+		</p:panel>
+	</div>
 	</ui:define>
 		
 </ui:composition>

@@ -19,7 +19,7 @@ import com.castle.entities.Castle;
 @Named
 @RequestScoped
 public class MainPageBB {
-	private static final String PAGE_PERSON_EDIT = "personEdit?faces-redirect=true";
+	private static final String PAGE_CASTLE_EDIT = "personEdit?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private String name;
@@ -55,7 +55,7 @@ public class MainPageBB {
 		}
 		
 		//2. Get list
-		list = castleDAO.getList(searchParams);
+		list = castleDAO.getListVer(searchParams);
 		
 		return list;
 	}
@@ -66,7 +66,7 @@ public class MainPageBB {
 		//2. Pass object through flash	
 		flash.put("castle", castle);
 		
-		return PAGE_PERSON_EDIT;
+		return PAGE_CASTLE_EDIT;
 	}
 
 	public String editCastle(Castle castle){
@@ -74,10 +74,10 @@ public class MainPageBB {
 		//2. Pass object through flash 
 		flash.put("castle", castle);
 		
-		return PAGE_PERSON_EDIT;
+		return PAGE_CASTLE_EDIT;
 	}
 
-	public String deletePerson(Castle castle){
+	public String deleteCastle(Castle castle){
 		castleDAO.remove(castle);
 		return PAGE_STAY_AT_THE_SAME;
 	}
