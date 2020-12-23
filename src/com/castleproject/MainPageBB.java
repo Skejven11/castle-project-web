@@ -19,7 +19,7 @@ import com.castle.entities.Castle;
 @Named
 @RequestScoped
 public class MainPageBB {
-	private static final String PAGE_CASTLE_EDIT = "personEdit?faces-redirect=true";
+	private static final String PAGE_CASTLE_EDIT = "castleEdit?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private String name;

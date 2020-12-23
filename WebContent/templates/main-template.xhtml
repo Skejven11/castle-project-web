@@ -16,9 +16,10 @@
 <h:body>
 	<h:form id="menu">
 		<p:menubar>
-			<p:menuitem value="Castle List"/>
-			<p:menuitem value="Something" />
-			<p:submenu label="User"/>
+			<p:menuitem value="Castle List" action="/public/castleList?faces-redirect=true"/>
+			<p:menuitem value="Login" action="/public/login?faces-redirect=true" rendered="#{remoteClient == null}"/>
+			<p:menuitem value="Logout" action="#{loginBB.doLogout()}" rendered="#{remoteClient != null}"/>
+			<p:submenu label="#{remoteClient.details.login}" rendered="#{remoteClient != null}"/>
 		</p:menubar>
 	</h:form>
 	
