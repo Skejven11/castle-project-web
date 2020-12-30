@@ -21,6 +21,7 @@ public class RegisterBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final String PAGE_CASTLE_LIST = "castleList?faces-redirect=true";
+	private static final String PAGE_LOGIN = "/public/login";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 	
 	private User user = new User();
@@ -41,17 +42,26 @@ public class RegisterBB implements Serializable {
 	public String saveData() {
 		
 		user.setRole("user");
-
-		try {
-				userDAO.create(user);
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		
+		if (userDAO.userExists(user.getLogin(), user.getPassword()).isEmpty())
+		{
+			try {
+					userDAO.create(user);
+	
+			} catch (Exception e) {
+				e.printStackTrace();
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", null));
+				return PAGE_STAY_AT_THE_SAME;
+			}
+		}
+		else
+		{
 			context.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", null));
+			new FacesMessage(FacesMessage.SEVERITY_ERROR, "User already exists", null));
 			return PAGE_STAY_AT_THE_SAME;
 		}
 
-		return PAGE_CASTLE_LIST;
+		return PAGE_LOGIN;
 	}
 }

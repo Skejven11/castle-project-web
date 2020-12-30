@@ -32,9 +32,11 @@
 					
 					<p:column priority="5">
 						<f:facet name="header">
-							<h:outputText value="Name" />
+							<h:outputText value="Name"/>
 						</f:facet>
-						<h:outputText value="#{c.name}" />
+						<p:commandLink action="#{castleViewBB.viewCastle(c)}">
+						<h:outputText value="#{c.name}"/>
+						</p:commandLink>
 					</p:column>
 					
 					<p:column priority="5">
