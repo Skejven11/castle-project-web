@@ -13,6 +13,12 @@
 <title>Castle List</title>
 <h:outputStylesheet name="css/style.css" library="resources/template"/>
 </h:head>
+
+<f:metadata>
+	<f:viewParam name="castle" value="#{castleViewBB.castle.idcastle}"
+		converterMessage="Error"/>
+	<f:event type="preRenderView" listener="#{castleViewBB.onLoad()}" />
+</f:metadata>
 	
 <ui:composition template="/templates/main-template.xhtml">
 
@@ -27,22 +33,28 @@
 			    <h:outputText value="#{castleViewBB.castle.name}" />
 			     
 			    <h:outputText value="Country" />
-			    <h:outputText value="" />
+			    <h:outputText value="#{castleViewBB.castle.country}" />
 			     
 			    <h:outputText value="Current Owner" />
-			    <h:outputText value="" />
+			    <h:outputText value="#{castleViewBB.castle.currentOwner}" />
 			     
 			    <h:outputText value="Original Owner" />
-			    <h:outputText value="" />
+			    <h:outputText value="#{castleViewBB.castle.originalOwner}" />
 			    
 			    <h:outputText value="Construction Century" />
-			    <h:outputText value="" />
+			    <h:outputText value="#{castleViewBB.castle.constructionCentury}th Century" />
 			    
 			    <h:outputText value="State of the castle" />
-			    <h:outputText value="" />
+			    <h:outputText value="#{castleViewBB.ruin}" />
 			    
 			    <h:outputText value="Score" />
-			    <h:outputText value="" />
+			    <h:outputText value="#{castleViewBB.castle.score}/10" />
+			    
+				<f:facet name="footer">
+					<c:forEach var="#{castleViewBB.score}" begin="1" end="5">
+				    	<i class="pi pi-star"></i>
+					</c:forEach>
+				</f:facet>
 			</p:panelGrid>
 	</div>
 	</ui:define>

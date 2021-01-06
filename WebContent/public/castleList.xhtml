@@ -34,9 +34,9 @@
 						<f:facet name="header">
 							<h:outputText value="Name"/>
 						</f:facet>
-						<p:commandLink action="#{castleViewBB.viewCastle(c)}">
-						<h:outputText value="#{c.name}"/>
-						</p:commandLink>
+						<p:link outcome="castleView" value="#{c.name}">
+							<f:param name="castle" value="#{c.idcastle}" />
+						</p:link>
 					</p:column>
 					
 					<p:column priority="5">
