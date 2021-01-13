@@ -20,9 +20,10 @@
 	<div class="mainPanel">
 	
 		<h:form>
-			<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid columns="3" cellpadding="5">
 				<p:inputText value="#{mainPageBB.name}" placeholder="Castle name"/>
-				<p:commandButton value="Szukaj" update="form-table" />
+				<p:commandButton value="Search" update="form-table" />
+				<p:button value="Add new castle" style="margin-left:56em" rendered="#{remoteClient != null}"/>
 			</h:panelGrid>
 		</h:form>
 		
@@ -71,7 +72,7 @@
 						<f:facet name="header">
 							<h:outputText value="State of the castle" />
 						</f:facet>
-						<h:outputText value="#{c.constructionCentury}th" />
+						<h:outputText value="#{c.isRuin}" />
 					</p:column>
 					
 				</p:dataTable>

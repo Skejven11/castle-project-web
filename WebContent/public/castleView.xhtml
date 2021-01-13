@@ -14,6 +14,8 @@
 <h:outputStylesheet name="css/style.css" library="resources/template"/>
 </h:head>
 
+<c:set var="maxLoop" value="6"/>
+
 <f:metadata>
 	<f:viewParam name="castle" value="#{castleViewBB.castle.idcastle}"
 		converterMessage="Error"/>
@@ -25,9 +27,6 @@
 	<ui:define name="pageContent">
 	<div class="mainPanel">
 			<p:panelGrid columns="2">
-    	<f:facet name="header">
-       		 <p:graphicImage name="demo/images/misc/kobe.png" />
-   		</f:facet>
      
 			    <h:outputText value="Name:" />
 			    <h:outputText value="#{castleViewBB.castle.name}" />
@@ -45,15 +44,22 @@
 			    <h:outputText value="#{castleViewBB.castle.constructionCentury}th Century" />
 			    
 			    <h:outputText value="State of the castle" />
-			    <h:outputText value="#{castleViewBB.ruin}" />
+			    <h:outputText value="#{castleViewBB.castle.isRuin}" />
 			    
 			    <h:outputText value="Score" />
 			    <h:outputText value="#{castleViewBB.castle.score}/10" />
 			    
+			    <h:outputText value="Your score" rendered="#{remoteClient!=null}"/>
+			    <h:panelGrid columns="2" cellpadding="1" rendered="#{remoteClient!=null}">
+				    <h:form>
+				    	<p:inputText id="score" value="#{castleViewBB.castleScore.rating}" placeholder="Score"/>
+				    	<p:commandButton value="Rate" action="#{castleViewBB.castleScored()}" update="@form" style=""/>
+				     </h:form>
+				</h:panelGrid>
 				<f:facet name="footer">
-					<c:forEach var="#{castleViewBB.score}" begin="1" end="5">
+					<ui:repeat value="#{castleViewBB.score}">
 				    	<i class="pi pi-star"></i>
-					</c:forEach>
+					</ui:repeat>
 				</f:facet>
 			</p:panelGrid>
 	</div>

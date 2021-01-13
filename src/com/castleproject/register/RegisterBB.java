@@ -20,7 +20,6 @@ import com.castle.entities.User;
 public class RegisterBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private static final String PAGE_CASTLE_LIST = "castleList?faces-redirect=true";
 	private static final String PAGE_LOGIN = "/public/login";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 	

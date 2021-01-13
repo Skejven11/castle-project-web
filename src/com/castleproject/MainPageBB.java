@@ -4,14 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.ejb.EJB;
 import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
-import javax.servlet.http.HttpSession;
 
 import com.castle.dao.CastleDAO;
 import com.castle.entities.Castle;
