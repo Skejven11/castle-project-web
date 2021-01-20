@@ -23,10 +23,12 @@ import com.castle.dao.UserDAO;
 @Named
 @RequestScoped
 public class CastleViewBB {
-	
+		private static final String PAGE_CASTLE = "castleView?faces-redirect=true&includeViewParams=true";
 		private Castle castle = new Castle();
-		private ArrayList score = new ArrayList((int)castle.getScore());
+		private ArrayList scores = new ArrayList((int)castle.getScore());
 		private CastleScore castleScore = new CastleScore();
+		private User user = new User();
+		private int score = 0;
 		
 		public CastleScore getCastleScore() {
 			return castleScore;
@@ -36,8 +38,20 @@ public class CastleViewBB {
 			return castle;
 		}
 		
-		public ArrayList getScore() {
+		public User getUser() {
+			return user;
+		}
+		
+		public ArrayList getScores() {
+			return scores;
+		}
+		
+		public Integer getScore() {
 			return score;
+		}
+		
+		public void setScore(Integer score) {
+			this.score=score;
 		}
 		
 		@Inject
@@ -52,19 +66,33 @@ public class CastleViewBB {
 		
 		public void onLoad() throws IOException{
 			castle = castleDAO.find(castle.getIdcastle());
-			for (int i=0;i<castle.getScore();i++) score.add("");
+			for (int i=0;i<castle.getScore();i++) scores.add("");
+			
+			List<User> users = userDAO.getUser("admin", "admin");
+			user = users.get(0);
+			
+			List<CastleScore> castleScores=castleScoreDAO.scoreExists(user, castle);
+			if (!castleScores.isEmpty()) castleScore = castleScores.get(0);
 		}
 		
 		public String castleScored() {
-			List<User> users = userDAO.getUser("admin", "admin");
-			User user = users.get(0);
+			castle = castleDAO.find(castle.getIdcastle());
 			Date date = new Date();
+			List<User> users = userDAO.getUser("admin", "admin");
+			user = users.get(0);
+			
+			List<CastleScore> castleScores=castleScoreDAO.scoreExists(user, castle);
+			if (!castleScores.isEmpty()) castleScore=castleScores.get(0);
 			castleScore.setCastle(castle);
 			castleScore.setUser(user);
 			castleScore.setDate(date);
+			castleScore.setRating(score);
 			
 			try {
-				castleScoreDAO.create(castleScore);
+				if (castleScores.isEmpty()) {
+					castleScoreDAO.create(castleScore);
+				}
+				else castleScoreDAO.merge(castleScore);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -72,7 +100,29 @@ public class CastleViewBB {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", null));
 				return null;
 			}
-			return null;
+			calcScore();
+			return PAGE_CASTLE;
+		}
+		
+		public void calcScore() {
+			List<CastleScore> scores = castleScoreDAO.scoreCastles(castle);
+			double rating=0;
+			int size=0;
+			
+			for (CastleScore scoreTemp: scores) {
+				rating+=scoreTemp.getRating();
+				size++;
+			}
+			castle.setScore(rating/size);
+			
+			try {
+					castleDAO.merge(castle);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", null));
+			}
 		}
 
 }

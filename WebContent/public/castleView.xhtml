@@ -27,7 +27,6 @@
 	<ui:define name="pageContent">
 	<div class="mainPanel">
 			<p:panelGrid columns="2">
-     
 			    <h:outputText value="Name:" />
 			    <h:outputText value="#{castleViewBB.castle.name}" />
 			     
@@ -52,12 +51,13 @@
 			    <h:outputText value="Your score" rendered="#{remoteClient!=null}"/>
 			    <h:panelGrid columns="2" cellpadding="1" rendered="#{remoteClient!=null}">
 				    <h:form>
-				    	<p:inputText id="score" value="#{castleViewBB.castleScore.rating}" placeholder="Score"/>
+				    	<h:outputText value="#{castleViewBB.castleScore.rating}"/>
+				    	<p:inputText id="score" value="#{castleViewBB.score}" placeholder="Score"/>
 				    	<p:commandButton value="Rate" action="#{castleViewBB.castleScored()}" update="@form" style=""/>
 				     </h:form>
 				</h:panelGrid>
 				<f:facet name="footer">
-					<ui:repeat value="#{castleViewBB.score}">
+					<ui:repeat value="#{castleViewBB.scores}">
 				    	<i class="pi pi-star"></i>
 					</ui:repeat>
 				</f:facet>
