@@ -23,7 +23,7 @@
 			<h:panelGrid columns="3" cellpadding="5">
 				<p:inputText value="#{mainPageBB.name}" placeholder="Castle name"/>
 				<p:commandButton value="Search" update="form-table" />
-				<p:button value="Add new castle" style="margin-left:56em" rendered="#{remoteClient != null}"/>
+				<p:button value="Add new castle" style="margin-left:56em" outcome="/pages/user/addCastle?faces-redirect=true"/>
 			</h:panelGrid>
 		</h:form>
 		

@@ -17,8 +17,8 @@ import com.castle.entities.User;
 @Named
 @RequestScoped
 public class LoginBB {
-	private static final String PAGE_MAIN = "/public/castleList?faces-redirect=true";
-	private static final String PAGE_LOGIN = "/public/login";
+	private static final String PAGE_MAIN = "/pages/public/castleList?faces-redirect=true";
+	private static final String PAGE_LOGIN = "/pages/public/login";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private String login;

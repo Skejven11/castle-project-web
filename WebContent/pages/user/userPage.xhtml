@@ -10,16 +10,14 @@
 	
 <h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Castle List</title>
+<title>User Page</title>
 <h:outputStylesheet name="css/style.css" library="resources/template"/>
 </h:head>
 
 <c:set var="maxLoop" value="6"/>
 
 <f:metadata>
-	<f:viewParam name="castle" value="#{castleViewBB.castle.idcastle}"
-		converterMessage="Error"/>
-	<f:event type="preRenderView" listener="#{castleViewBB.onLoad()}" />
+	<f:event type="preRenderView" listener="#{UserPageBB.onLoad()}" />
 </f:metadata>
 	
 <ui:composition template="/templates/main-template.xhtml">
@@ -51,8 +49,7 @@
 			    <h:outputText value="Your score" rendered="#{remoteClient!=null}"/>
 			    <h:panelGrid columns="2" cellpadding="1" rendered="#{remoteClient!=null}">
 				    <h:form>
-				    	<h:outputText value="#{castleViewBB.castleScore.rating}"/>
-				    	<p:inputText id="score" value="#{castleViewBB.score}" placeholder="Score"/>
+				    	<p:inputText id="score" value="#{castleViewBB.score}" placeholder="#{castleViewBB.castleScore.rating}"/>
 				    	<p:commandButton value="Rate" action="#{castleViewBB.castleScored()}" update="@form" style=""/>
 				     </h:form>
 				</h:panelGrid>

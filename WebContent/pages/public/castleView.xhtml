@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Castle List</title>
+<h:outputStylesheet name="css/style.css" library="resources/template"/>
+</h:head>
+
+<c:set var="maxLoop" value="6"/>
+
+<f:metadata>
+	<f:viewParam name="castle" value="#{castleViewBB.castle.idcastle}"
+		converterMessage="Error"/>
+	<f:event type="preRenderView" listener="#{castleViewBB.onLoad()}" />
+</f:metadata>
+	
+<ui:composition template="/templates/main-template.xhtml">
+
+	<ui:define name="pageContent">
+	<div class="mainPanel">
+			<p:panelGrid columns="2">
+			    <h:outputText value="Name:" />
+			    <h:outputText value="#{castleViewBB.castle.name}" />
+			     
+			    <h:outputText value="Country" />
+			    <h:outputText value="#{castleViewBB.castle.country}" />
+			     
+			    <h:outputText value="Current Owner" />
+			    <h:outputText value="#{castleViewBB.castle.currentOwner}" />
+			     
+			    <h:outputText value="Original Owner" />
+			    <h:outputText value="#{castleViewBB.castle.originalOwner}" />
+			    
+			    <h:outputText value="Construction Century" />
+			    <h:outputText value="#{castleViewBB.castle.constructionCentury}th Century" />
+			    
+			    <h:outputText value="State of the castle" />
+			    <h:outputText value="#{castleViewBB.castle.isRuin}" />
+			    
+			    <h:outputText value="Score" />
+			    <h:outputText value="#{castleViewBB.castle.score}/10" />
+			    
+			    <h:outputText value="Your score" rendered="#{remoteClient!=null}"/>
+			    <h:panelGrid columns="2" cellpadding="1" rendered="#{remoteClient!=null}">
+				    <h:form>
+				    	<p:inputText id="score" value="#{castleViewBB.score}" placeholder="#{castleViewBB.castleScore.rating}"/>
+				    	<p:commandButton value="Rate" action="#{castleViewBB.castleScored()}" update="@form" style=""/>
+				     </h:form>
+				</h:panelGrid>
+				<f:facet name="footer">
+					<ui:repeat value="#{castleViewBB.scores}">
+				    	<i class="pi pi-star"></i>
+					</ui:repeat>
+				</f:facet>
+			</p:panelGrid>
+	</div>
+	</ui:define>
+		
+</ui:composition>
+
+</html>
