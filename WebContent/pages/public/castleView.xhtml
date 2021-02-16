@@ -9,12 +9,10 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 	
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Castle List</title>
-<h:outputStylesheet name="css/style.css" library="resources/template"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Castle List</title>
+	<h:outputStylesheet name="css/style.css" library="resources/template"/>
 </h:head>
-
-<c:set var="maxLoop" value="6"/>
 
 <f:metadata>
 	<f:viewParam name="castle" value="#{castleViewBB.castle.idcastle}"
@@ -51,8 +49,14 @@
 			    <h:outputText value="Your score" rendered="#{remoteClient!=null}"/>
 			    <h:panelGrid columns="2" cellpadding="1" rendered="#{remoteClient!=null}">
 				    <h:form>
-				    	<p:inputText id="score" value="#{castleViewBB.score}" placeholder="#{castleViewBB.castleScore.rating}"/>
-				    	<p:commandButton value="Rate" action="#{castleViewBB.castleScored()}" update="@form" style=""/>
+				    	<p:inputText id="score" value="#{castleViewBB.score}" placeholder="#{castleViewBB.castleScore.rating}" 
+				    	requiredMessage="Type a whole number form 1-10" converterMessage="Must be a whole number">
+				    	<f:validateDoubleRange minimum="0" maximum="10"/>
+				    	</p:inputText>
+				    	<p:commandButton value="Rate" action="#{castleViewBB.castleScored()}" update="@form"/>
+				    	<div class="mess">
+		  					<p:messages for="score"/>
+		  				</div>
 				     </h:form>
 				</h:panelGrid>
 				<f:facet name="footer">

@@ -2,16 +2,16 @@ package com.castleproject.user;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
+
 import java.util.ArrayList;
 import javax.enterprise.context.RequestScoped;
-import java.util.Date;
 import java.util.List;
 import java.io.IOException;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.simplesecurity.RemoteClient;
 
 import com.castle.entities.Castle;
 import com.castle.dao.CastleDAO;
@@ -24,12 +24,11 @@ import com.castle.dao.UserDAO;
 @RequestScoped
 public class UserPageBB {
 		private Castle castle = new Castle();
-		private ArrayList scores = new ArrayList((int)castle.getScore());
-		private CastleScore castleScore = new CastleScore();
 		private User user = new User();
+		private List<CastleScore> scoreList= null;
 		
-		public CastleScore getCastleScore() {
-			return castleScore;
+		public List<CastleScore> getScoreList() {
+			return scoreList;
 		}
 		
 		public Castle getCastle() {
@@ -38,10 +37,6 @@ public class UserPageBB {
 		
 		public User getUser() {
 			return user;
-		}
-		
-		public ArrayList getScores() {
-			return scores;
 		}
 		
 		@Inject
@@ -55,14 +50,11 @@ public class UserPageBB {
 		UserDAO userDAO;
 		
 		public void onLoad() throws IOException{
-			castle = castleDAO.find(castle.getIdcastle());
-			for (int i=0;i<castle.getScore();i++) scores.add("");
-			
-			List<User> users = userDAO.getUser("admin", "admin");
-			user = users.get(0);
-			
-			List<CastleScore> castleScores=castleScoreDAO.scoreExists(user, castle);
-			if (!castleScores.isEmpty()) castleScore = castleScores.get(0);
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+			RemoteClient<User> userTemp = (RemoteClient<User>)session.getAttribute("remoteClient");
+			user = userDAO.find(userTemp.getDetails().getIduser());
+			scoreList = castleScoreDAO.userExists(user);
 		}
 
 }

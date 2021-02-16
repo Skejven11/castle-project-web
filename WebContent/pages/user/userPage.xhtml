@@ -9,56 +9,41 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 	
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>User Page</title>
-<h:outputStylesheet name="css/style.css" library="resources/template"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>User Page</title>
+	<h:outputStylesheet name="css/style.css" library="resources/template"/>
 </h:head>
 
 <c:set var="maxLoop" value="6"/>
 
 <f:metadata>
-	<f:event type="preRenderView" listener="#{UserPageBB.onLoad()}" />
+	<f:viewParam name="user" value="#{userPageBB.user.iduser}"
+	converterMessage="Error"/>
+	<f:event type="preRenderView" listener="#{userPageBB.onLoad()}" />
 </f:metadata>
 	
 <ui:composition template="/templates/main-template.xhtml">
 
 	<ui:define name="pageContent">
 	<div class="mainPanel">
-			<p:panelGrid columns="2">
-			    <h:outputText value="Name:" />
-			    <h:outputText value="#{castleViewBB.castle.name}" />
-			     
-			    <h:outputText value="Country" />
-			    <h:outputText value="#{castleViewBB.castle.country}" />
-			     
-			    <h:outputText value="Current Owner" />
-			    <h:outputText value="#{castleViewBB.castle.currentOwner}" />
-			     
-			    <h:outputText value="Original Owner" />
-			    <h:outputText value="#{castleViewBB.castle.originalOwner}" />
-			    
-			    <h:outputText value="Construction Century" />
-			    <h:outputText value="#{castleViewBB.castle.constructionCentury}th Century" />
-			    
-			    <h:outputText value="State of the castle" />
-			    <h:outputText value="#{castleViewBB.castle.isRuin}" />
-			    
-			    <h:outputText value="Score" />
-			    <h:outputText value="#{castleViewBB.castle.score}/10" />
-			    
-			    <h:outputText value="Your score" rendered="#{remoteClient!=null}"/>
-			    <h:panelGrid columns="2" cellpadding="1" rendered="#{remoteClient!=null}">
-				    <h:form>
-				    	<p:inputText id="score" value="#{castleViewBB.score}" placeholder="#{castleViewBB.castleScore.rating}"/>
-				    	<p:commandButton value="Rate" action="#{castleViewBB.castleScored()}" update="@form" style=""/>
-				     </h:form>
-				</h:panelGrid>
-				<f:facet name="footer">
-					<ui:repeat value="#{castleViewBB.scores}">
-				    	<i class="pi pi-star"></i>
-					</ui:repeat>
-				</f:facet>
-			</p:panelGrid>
+		<div class="user">
+			<H2 style="margin-left:2%;top:6%">#{userPageBB.user.login}</H2>
+			<p style="margin-left:2%">role: #{userPageBB.user.role}</p>
+			<p style="margin-left:2%">email: #{userPageBB.user.email}</p>
+		</div>
+		<div class="ratings">
+				<H2 style="margin-left:2%;margin-top:6%">Latest ratings</H2>
+			    <ui:repeat value="#{userPageBB.scoreList}" var="s">
+			    	<h:panelGrid columns="4" cellpadding="2">
+			    		<i class="pi pi-star"/>
+			    		#{s.rating}/10  |
+			    		<p:link outcome="/pages/public/castleView" value="#{s.castle.name}">
+							<f:param name="castle" value="#{s.castle.idcastle}" />
+						</p:link>
+						|  #{s.date}
+			    	</h:panelGrid>
+			    </ui:repeat>
+		</div>
 	</div>
 	</ui:define>
 		

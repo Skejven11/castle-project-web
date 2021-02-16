@@ -19,7 +19,8 @@
 			<p:menuitem value="Castle List" action="/pages/public/castleList?faces-redirect=true"/>
 			<p:menuitem value="Login" action="/pages/public/login?faces-redirect=true" rendered="#{remoteClient == null}"/>
 			<p:menuitem value="Logout" action="#{loginBB.doLogout()}" rendered="#{remoteClient != null}"/>
-			<p:menuitem value="#{remoteClient.details.login}" rendered="#{remoteClient != null}" action="/pages/user/userPage?faces-redirect=true"/>
+			<p:menuitem value="#{remoteClient.details.login}" rendered="#{remoteClient != null}" action="/pages/user/userPage?faces-redirect=true">
+			</p:menuitem>
 			<p:menuitem value="Change user roles" rendered="#{remoteClient.details.role eq 'admin'}"/>
 		</p:menubar>
 	</h:form>

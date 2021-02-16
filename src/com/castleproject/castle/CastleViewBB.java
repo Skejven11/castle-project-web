@@ -12,6 +12,8 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import javax.faces.simplesecurity.RemoteClient;
 
 import com.castle.entities.Castle;
 import com.castle.dao.CastleDAO;
@@ -29,6 +31,7 @@ public class CastleViewBB {
 		private CastleScore castleScore = new CastleScore();
 		private User user = new User();
 		private int score = 0;
+		private RemoteClient<User> userTemp = new RemoteClient<User>();
 		
 		public CastleScore getCastleScore() {
 			return castleScore;
@@ -54,6 +57,10 @@ public class CastleViewBB {
 			this.score=score;
 		}
 		
+		public RemoteClient<User> getUserTemp() {
+			return userTemp;
+		}
+		
 		@Inject
 		FacesContext context;
 		
@@ -66,20 +73,29 @@ public class CastleViewBB {
 		
 		public void onLoad() throws IOException{
 			castle = castleDAO.find(castle.getIdcastle());
-			for (int i=0;i<castle.getScore();i++) scores.add("");
+			int temp = (int)castle.getScore();
+			for (int i=0;i<temp;i++) scores.add("");
 			
-			List<User> users = userDAO.getUser("admin", "admin");
-			user = users.get(0);
-			
-			List<CastleScore> castleScores=castleScoreDAO.scoreExists(user, castle);
-			if (!castleScores.isEmpty()) castleScore = castleScores.get(0);
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+			userTemp = (RemoteClient<User>)session.getAttribute("remoteClient");
+			if (userTemp!=null) {
+				List<User> users = userDAO.getUser(userTemp.getDetails().getLogin(), userTemp.getDetails().getPassword());
+				user = users.get(0);
+				List<CastleScore> castleScores=castleScoreDAO.scoreExists(user, castle);
+				if (!castleScores.isEmpty()) castleScore = castleScores.get(0);
+			}
 		}
 		
 		public String castleScored() {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+			userTemp = (RemoteClient<User>)session.getAttribute("remoteClient");
+			List<User> users = userDAO.getUser(userTemp.getDetails().getLogin(), userTemp.getDetails().getPassword()); 
+			user = users.get(0);
+			
 			castle = castleDAO.find(castle.getIdcastle());
 			Date date = new Date();
-			List<User> users = userDAO.getUser("admin", "admin");
-			user = users.get(0);
 			
 			List<CastleScore> castleScores=castleScoreDAO.scoreExists(user, castle);
 			if (!castleScores.isEmpty()) castleScore=castleScores.get(0);
@@ -113,7 +129,9 @@ public class CastleViewBB {
 				rating+=scoreTemp.getRating();
 				size++;
 			}
-			castle.setScore(rating/size);
+			rating=rating/size;
+			rating = (int)(Math.round(rating*100))/100.0;
+			castle.setScore(rating);
 			
 			try {
 					castleDAO.merge(castle);
