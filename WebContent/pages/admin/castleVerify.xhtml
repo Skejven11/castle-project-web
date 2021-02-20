@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>User Page</title>
+	<h:outputStylesheet name="css/style.css" library="resources/template"/>
+</h:head>
+
+<c:set var="maxLoop" value="6"/>
+
+<f:metadata>
+	<f:viewParam name="user" value="#{userPageBB.user.iduser}"
+	converterMessage="Error"/>
+	<f:event type="preRenderView" listener="#{userPageBB.onLoad()}" />
+</f:metadata>
+	
+<ui:composition template="/templates/main-template.xhtml">
+
+	<ui:define name="pageContent">
+	<div class="mainPanel">
+		<div class="user">
+			<h:form id="form-table" style="margin-bottom:1em;">
+				<p:dataTable value="#{castleVerifyBB.list}" var="c">
+					<p:column priority="5">
+						<f:facet name="header">
+							<h:outputText value="Name"/>
+						</f:facet>
+						<h:outputText value="#{c.name}"/>
+					</p:column>
+					
+					<p:column priority="5">
+						<f:facet name="header">
+							<h:outputText value="Country" />
+						</f:facet>
+						<h:outputText value="#{c.country}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Current Owner" />
+						</f:facet>
+						<h:outputText value="#{c.currentOwner}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Original Owner" />
+						</f:facet>
+						<h:outputText value="#{c.originalOwner}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Construction Century" />
+						</f:facet>
+						<h:outputText value="#{c.constructionCentury}th" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="State of the castle" />
+						</f:facet>
+						<h:outputText value="#{c.isRuin}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Verify?" />
+						</f:facet>
+						<p:commandButton value="Verify" update="@form" action="#{castleVerifyBB.verify(c.idcastle)}"/>
+						<p:commandButton value="Reject" update="@form" action="#{castleVerifyBB.reject(c.idcastle)}"/>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
+	</div>
+	</ui:define>
+		
+</ui:composition>
+
+</html>

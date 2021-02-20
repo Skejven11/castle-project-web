@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.castle.dao.UserDAO;
 import com.castle.entities.User;
+import com.castleproject.bcrypt.BCrypt;
 
 @Named
 @RequestScoped
@@ -46,7 +47,7 @@ public class LoginBB {
 	public String doLogin() {
 		FacesContext ctx = FacesContext.getCurrentInstance();
 
-		List<User> users = userDAO.getUser(login, pass);
+		List<User> users = userDAO.userExists(login, pass);
 
 		if (users.isEmpty()) {
 			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -55,6 +56,7 @@ public class LoginBB {
 		}
 		
 		User user = users.get(0);
+		if (!BCrypt.checkpw(pass, user.getPassword())) return PAGE_STAY_AT_THE_SAME;
 		
 		RemoteClient<User> client = new RemoteClient<User>(); 
 		client.setDetails(user);

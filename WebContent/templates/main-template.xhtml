@@ -21,7 +21,7 @@
 			<p:menuitem value="Logout" action="#{loginBB.doLogout()}" rendered="#{remoteClient != null}"/>
 			<p:menuitem value="#{remoteClient.details.login}" rendered="#{remoteClient != null}" action="/pages/user/userPage?faces-redirect=true">
 			</p:menuitem>
-			<p:menuitem value="Change user roles" rendered="#{remoteClient.details.role eq 'admin'}"/>
+			<p:menuitem value="Verify Castles" rendered="#{remoteClient.details.role eq 'admin'}" action="/pages/admin/castleVerify?faces-redirect=true"/>
 		</p:menubar>
 	</h:form>
 	

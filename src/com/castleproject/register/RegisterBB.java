@@ -14,13 +14,14 @@ import javax.servlet.http.HttpSession;
 
 import com.castle.dao.UserDAO;
 import com.castle.entities.User;
+import com.castleproject.bcrypt.BCrypt;
 
 @Named
 @ViewScoped
 public class RegisterBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private static final String PAGE_LOGIN = "/public/login";
+	private static final String PAGE_LOGIN = "login?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 	
 	private User user = new User();
@@ -41,6 +42,8 @@ public class RegisterBB implements Serializable {
 	public String saveData() {
 		
 		user.setRole("user");
+		String hashpass = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
+		user.setPassword(hashpass);
 		
 		if (userDAO.userExists(user.getLogin(), user.getPassword()).isEmpty())
 		{

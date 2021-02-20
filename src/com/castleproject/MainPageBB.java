@@ -43,15 +43,11 @@ public class MainPageBB {
 
 	public List<Castle> getList(){
 		List<Castle> list = null;
-		
-		//1. Prepare search params
 		Map<String,Object> searchParams = new HashMap<String, Object>();
 		
 		if (name != null && name.length() > 0){
 			searchParams.put("name", name);
 		}
-		
-		//2. Get list
 		list = castleDAO.getListVer(searchParams);
 		
 		return list;
